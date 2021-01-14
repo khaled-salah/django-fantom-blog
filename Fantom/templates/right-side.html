@@ -1,0 +1,77 @@
+{% load static %}
+{% load custom_tags %}
+<div class="col-lg-4">
+    <div class="blog_right_sidebar">
+        <aside class="single_sidebar_widget search_widget">
+            <form action="{% url 'search' %}" method="get">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search Posts" name="q">
+                    <span class="input-group-btn">
+                    <button class="btn btn-default" type="button"><i class="lnr lnr-magnifier"></i></button>
+                    </span>
+                </div>
+            </form>
+            <div class="br"></div>
+        </aside>
+        <aside class="single_sidebar_widget author_widget">
+            <img class="author_img rounded-circle" src="{% static 'img/blog/khaled.jpeg' %}" alt="">
+            <h4>Khaled Salah</h4>
+            <p>Python Developer </p>
+            <div class="social_icon">
+                <a target="_blank" href="https://www.facebook.com/khaled.salah.5283/"><i class="fa fa-facebook"></i></a>
+                <a target="_blank" href="https://twitter.com/Khaledbasuoni"><i class="fa fa-twitter"></i></a>
+                <a target="_blank" href="https://github.com/khaled-salah"><i class="fa fa-github"></i></a>
+                <a target="_blank" href="https://www.linkedin.com/in/k-salah/"><i class="fa fa-linkedin"></i></a>
+            </div>
+            <p>Boot camps have its supporters andit sdetractors. Some people do not understand why you should have to
+                spend money on boot camp when you can get. Boot camps have itssuppor ters andits detractors.</p>
+            <div class="br"></div>
+        </aside>
+        <aside class="single_sidebar_widget popular_post_widget">
+            <h3 class="widget_title">Popular Posts</h3>
+            {% hit_posts as hit_posts %}
+            {% for hit_post in hit_posts %}
+            <div class="media post_item">
+                <img src="{{ hit_post.image.url }}" width="20%" height="15%" alt="post">
+                <div class="media-body">
+                    <a href="{% url 'detail' pk=hit_post.pk slug=hit_post.slug %}"><h3>{{ hit_post.title }}</h3></a>
+                    <p>{{ hit_post.publishing_date }}</p>
+                    <p>Hit : {{ hit_post.hit }}</p>
+                </div>
+            </div>
+            {% endfor %}
+
+            <div class="br"></div>
+        </aside>
+        <aside class="single_sidebar_widget">
+            <a href="#"><img class="img-fluid" src="{% static 'img/blog/add.jpg' %}" alt=""></a>
+            <div class="br"></div>
+        </aside>
+        <aside class="single_sidebar_widget post_category_widget">
+            <h4 class="widget_title">Post Categories</h4>
+            <ul class="list cat-list">
+                {% categories as categories %}
+                {% for category in categories %}
+                <li>
+                    <a href="{% url 'category-detail' pk=category.pk slug=category.slug %}"
+                       class="d-flex justify-content-between">
+                        <p>{{ category.title }}</p>
+                        <p>{{ category.post_count }}</p>
+                    </a>
+                </li>
+                {% endfor %}
+
+            </ul>
+            <div class="br"></div>
+        </aside>
+        <aside class="single-sidebar-widget tag_cloud_widget">
+            <h4 class="widget_title">Tag Clouds</h4>
+            <ul class="list">
+                {% tags as tags %}
+                {% for tag in tags %}
+                <li><a href="{% url 'tag_detail' slug=tag.slug%}">{{ tag.title }}</a></li>
+                {% endfor %}
+            </ul>
+        </aside>
+    </div>
+</div>
